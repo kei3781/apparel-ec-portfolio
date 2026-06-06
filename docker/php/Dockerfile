@@ -5,12 +5,18 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    libzip-dev
+    libzip-dev \
+    libpng-dev \
+    libonig-dev
 
 RUN docker-php-ext-install \
     pdo_mysql \
+    bcmath \
     zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs
 
 WORKDIR /var/www
